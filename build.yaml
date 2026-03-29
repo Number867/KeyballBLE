@@ -18,10 +18,10 @@
 #
 ---
 include:
- - board: seeeduino_xiao_ble
+ - board: xiao_ble
    shield: KeyballBLE_R
    snippet: studio-rpc-usb-uart
- - board: seeeduino_xiao_ble
+ - board: xiao_ble
    shield: KeyballBLE_L
- - board: seeeduino_xiao_ble
+ - board: xiao_ble
    shield: settings_reset
