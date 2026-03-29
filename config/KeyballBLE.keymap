@@ -9,55 +9,21 @@
 #define SCROLL 5
 #define NUM 6
 
-&mt {
-    flavor = "balanced";
-    quick-tap-ms = <0>;
-};
-
 / {
     combos { compatible = "zmk,combos"; };
-
-    macros {
-        to_layer_0: to_layer_0 {
-            compatible = "zmk,behavior-macro-one-param";
-            #binding-cells = <1>;
-            bindings = <&to 2 &macro_param_1to1 &kp MACRO_PLACEHOLDER>;
-            label = "TO_LAYER_0";
-        };
-    };
-
-    behaviors {
-        lt_to_layer_0: lt_to_layer_0 {
-            compatible = "zmk,behavior-hold-tap";
-            label = "LAYER_TAP_TO_0";
-            bindings = <&mo>, <&to_layer_0>;
-
-            #binding-cells = <2>;
-            tapping-term-ms = <200>;
-        };
-
-        ROTATE: ROTATE {
-            compatible = "zmk,behavior-sensor-rotate-var";
-            label = "ROTATE";
-            #sensor-binding-cells = <2>;
-            bindings = <&msc>, <&msc>;
-
-            tap-ms = <20>;
-        };
-    };
 
     keymap {
         compatible = "zmk,keymap";
 
         default_layer {
             bindings = <
-&kp Q    &kp W             &kp E          &kp R                  &kp T                                                                    &kp Y                   &kp U  &lt 5 I    &kp O    &kp P
-&kp A    &kp S             &kp D          &kp F                  &kp G                   &mkp LCLK      &kp QUESTION                      &kp H                   &kp J  &kp K      &kp L    &kp EXCL
-&kp Z    &kp X             &kp C          &kp V                  &kp B                   &mkp RCLK      &kp AT                            &kp N                   &kp M  &kp COMMA  &kp DOT  &kp BACKSPACE
-&kp TAB  &sk LC(LEFT_WIN)  &sk LG(LCTRL)  &lt_to_layer_0 6 INT5  &lt_to_layer_0 1 SPACE  &sk LSHFT      &lt_to_layer_0 3 INTERNATIONAL_4  &lt_to_layer_0 2 ENTER                             &kp DEL
+&kp Q    &kp W             &kp E          &kp R               &kp T                                     &kp Y        &kp U  &lt 5 I    &kp O    &kp P
+&kp A    &kp S             &kp D          &kp F               &kp G        &mkp LCLK      &kp QUESTION  &kp H        &kp J  &kp K      &kp L    &kp EXCL
+&kp Z    &kp X             &kp C          &kp V               &kp B        &mkp RCLK      &kp AT        &kp N        &kp M  &kp COMMA  &kp DOT  &kp BACKSPACE
+&kp TAB  &sk LC(LEFT_WIN)  &sk LG(LCTRL)  &lt 6 INT_MUHENKAN  &lt 1 SPACE  &sk LSHFT      &kp INT4      &lt 2 ENTER                             &kp DEL
             >;
 
-            sensor-bindings = <&ROTATE SCRL_DOWN SCRL_UP>;
+            sensor-bindings = <&none>;
         };
 
         FUNCTION {
