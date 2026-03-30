@@ -12,11 +12,11 @@
 &kp Q    &kp W      &kp E     &kp R        &kp T                                    &kp Y        &kp U  &lt 5 I    &kp O    &kp P
 &kp A    &kp S      &kp D     &kp F        &kp G        &mkp LCLK      &kp QMARK    &kp H        &kp J  &kp K      &kp L    &kp EXCL
 &kp Z    &kp X      &kp C     &kp V        &kp B        &mkp RCLK      &kp AT       &kp N        &kp M  &kp COMMA  &kp DOT  &kp BACKSPACE
-&kp TAB  &sk LCTRL  &sk LGUI  &lt 6 LANG2  &lt 0 SPACE  &sk LSHFT      &lt 3 LANG1  &lt 2 ENTER                             &kp DEL
+&kp TAB  &sk LCTRL  &sk LGUI  &lt 6 LANG2  &lt 1 SPACE  &sk LSHFT      &lt 3 LANG1  &lt 2 ENTER                             &kp DEL
             >;
         };
 
-        LAYER_1 {
+        Num {
             bindings = <
 &kp F1   &kp F2   &kp F3  &kp F4  &kp F5                       &trans  &kp N7  &kp N8  &kp N9  &trans
 &kp F6   &kp F7   &kp F8  &kp F9  &kp F10  &trans      &trans  &trans  &kp N4  &kp N5  &kp N6  &trans
@@ -25,7 +25,7 @@
             >;
         };
 
-        NUM {
+        Char {
             bindings = <
 &kp PERCENT  &kp EQUAL    &kp LEFT_BRACKET      &kp RIGHT_BRACKET      &kp INT_YEN                               &trans          &kp SINGLE_QUOTE  &kp UP_ARROW    &kp PLUS         &kp STAR
 &kp MINUS    &kp AT_SIGN  &kp LEFT_PARENTHESIS  &kp RIGHT_PARENTHESIS  &kp AMPERSAND      &mkp LCLK      &trans  &kp RG(RS(N5))  &kp LEFT_ARROW    &kp DOWN_ARROW  &kp RIGHT_ARROW  &trans
