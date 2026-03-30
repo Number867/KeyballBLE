@@ -11,6 +11,6 @@ manifest:
       import: app/west.yml
     - name: zmk-pmw3610-driver
       remote: Dist16384
-      revision: main        
+      revision: 2618e85        
   self:
     path: config
