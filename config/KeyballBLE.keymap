@@ -10,7 +10,7 @@
         default_layer {
             bindings = <
 &kp Q     &kp W      &kp E    &kp R       &kp T                                      &kp Y        &kp U  &lt 5 I    &kp O    &kp P
-&kp A     &kp S      &kp D    &kp F       &kp G        &mkp LCLK        &kp QMARK    &kp H        &kp J  &kp K      &kp L    &kp EXCL
+&kp A     &kp S      &kp D    &kp F       &kp G        &mkp LCLK        &kp QMARK    &kp H        &kp J  &kp K      &kp L    &kp MINUS
 &kp Z     &kp X      &kp C    &kp V       &kp B        &mkp RCLK        &kp AT       &kp N        &kp M  &kp COMMA  &kp DOT  &kp BACKSPACE
 &sk LGUI  &sk LCTRL  &kp TAB  &sk LSHIFT  &lt 1 SPACE  &lt 6 LANG2      &lt 3 LANG1  &lt 2 ENTER                             &kp DEL
             >;
@@ -28,7 +28,7 @@
         Char {
             bindings = <
 &kp PERCENT  &kp EQUAL    &kp LEFT_BRACKET      &kp RIGHT_BRACKET      &kp INT_YEN                               &trans          &kp SINGLE_QUOTE  &kp UP_ARROW    &kp PLUS         &kp STAR
-&kp MINUS    &kp AT_SIGN  &kp LEFT_PARENTHESIS  &kp RIGHT_PARENTHESIS  &kp AMPERSAND      &mkp LCLK      &trans  &kp RG(RS(N5))  &kp LEFT_ARROW    &kp DOWN_ARROW  &kp RIGHT_ARROW  &trans
+&kp EXCL     &kp AT_SIGN  &kp LEFT_PARENTHESIS  &kp RIGHT_PARENTHESIS  &kp AMPERSAND      &mkp LCLK      &trans  &kp RG(RS(N5))  &kp LEFT_ARROW    &kp DOWN_ARROW  &kp RIGHT_ARROW  &trans
 &kp SLASH    &kp UNDER    &kp SEMI              &kp COLON              &kp DOUBLE_QUOTES  &mkp RCLK      &trans  &kp RG(RS(N4))  &kp LT            &kp GT          &kp TILDE        &trans
 &trans       &trans       &trans                &trans                 &trans             &trans         &trans  &trans                                                             &trans
             >;
