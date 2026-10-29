@@ -4,46 +4,84 @@
 #include <dt-bindings/zmk/pointing.h>
 
 / {
+    // 左親指SPACE長押し(1) + 右親指ENTER長押し(2) を同時に押した時だけ 設定レイヤー(6) が出る
+    conditional_layers {
+        compatible = "zmk,conditional-layers";
+        sys_layer {
+            if-layers = <1 2>;
+            then-layer = <6>;
+        };
+        // Windowsモード(5)がONの時だけ、Navレイヤーの一部をWindows用ショートカットに差し替える
+        win_nav {
+            if-layers = <3 5>;
+            then-layer = <4>;
+        };
+    };
+
+    macros {
+        // 今日の日付: Mac の「ショートカット」アプリ(⌃⌥⌘F18 で起動)が日付をコピー → 待ってから ⌘V で貼り付け
+        // 日付ではなく前にコピーした内容が貼られる時は、600 を大きくする
+        date_paste: date_paste {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_wait_time 600>
+                , <&kp LC(LA(LG(F18)))>
+                , <&macro_wait_time 30>
+                , <&kp LG(V)>
+                ;
+        };
+    };
+
     keymap {
         compatible = "zmk,keymap";
 
         default_layer {
             bindings = <
-&kp Q     &kp W      &kp E    &kp R       &kp T                                      &kp Y        &kp U  &lt 5 I    &kp O    &kp P
-&kp A     &kp S      &kp D    &kp F       &kp G        &mkp LCLK        &kp QMARK    &kp H        &kp J  &kp K      &kp L    &kp MINUS
-&kp Z     &kp X      &kp C    &kp V       &kp B        &mkp RCLK        &kp AT       &kp N        &kp M  &kp COMMA  &kp DOT  &kp BACKSPACE
-&sk LGUI  &sk LCTRL  &kp TAB  &sk LSHIFT  &lt 1 SPACE  &lt 6 LANG2      &lt 3 LANG1  &lt 2 ENTER                             &kp DEL
+&kp Q     &kp W      &kp E    &kp R       &kp T                                      &kp Y        &kp U  &lt 8 I    &kp O    &kp P
+&kp A     &kp S      &kp D    &kp F       &kp G        &mkp LCLK        &kp SQT      &kp H        &kp J  &kp K      &kp L    &kp MINUS
+&kp Z     &kp X      &kp C    &kp V       &kp B        &mkp RCLK        &kp SLASH    &kp N        &kp M  &kp COMMA  &kp DOT  &kp BACKSPACE
+&sk LGUI  &sk LCTRL  &kp TAB  &sk LSHIFT  &lt 1 SPACE  &mo 3            &kp ESC      &lt 2 ENTER                             &kp DEL
             >;
         };
 
         Num {
             bindings = <
-&kp F1   &kp F2   &kp F3  &kp F4  &kp F5                       &trans  &kp N7  &kp N8  &kp N9  &trans
-&kp F6   &kp F7   &kp F8  &kp F9  &kp F10  &trans      &trans  &trans  &kp N4  &kp N5  &kp N6  &trans
-&kp F11  &kp F12  &trans  &trans  &trans   &trans      &trans  &kp N0  &kp N1  &kp N2  &kp N3  &trans
-&trans   &trans   &trans  &trans  &trans   &trans      &trans  &trans                          &trans
+&kp F1   &kp F2   &kp F3  &kp F4  &kp F5                       &kp SLASH  &kp N7  &kp N8  &kp N9  &kp MINUS
+&kp F6   &kp F7   &kp F8  &kp F9  &kp F10  &trans      &kp EQUAL  &kp STAR   &kp N4  &kp N5  &kp N6  &kp PLUS
+&kp F11  &kp F12  &trans  &trans  &date_paste  &trans  &kp COMMA  &kp N0     &kp N1  &kp N2  &kp N3  &trans
+&trans   &trans   &trans  &trans  &trans   &trans      &kp DOT    &trans                             &trans
             >;
         };
 
         Char {
             bindings = <
-&kp PERCENT  &kp EQUAL    &kp LEFT_BRACKET      &kp RIGHT_BRACKET      &kp INT_YEN                               &trans          &kp SINGLE_QUOTE  &kp UP_ARROW    &kp PLUS         &kp STAR
-&kp EXCL     &kp AT_SIGN  &kp LEFT_PARENTHESIS  &kp RIGHT_PARENTHESIS  &kp AMPERSAND      &mkp LCLK      &trans  &kp RG(RS(N5))  &kp LEFT_ARROW    &kp DOWN_ARROW  &kp RIGHT_ARROW  &trans
-&kp SLASH    &kp UNDER    &kp SEMI              &kp COLON              &kp DOUBLE_QUOTES  &mkp RCLK      &trans  &kp RG(RS(N4))  &kp LT            &kp GT          &kp TILDE        &trans
-&trans       &trans       &trans                &trans                 &trans             &trans         &trans  &trans                                                             &trans
+&kp EXCL   &kp AT_SIGN  &kp HASH   &kp DOLLAR  &kp PERCENT                     &kp CARET  &kp AMPERSAND  &kp STAR  &kp LPAR   &kp RPAR
+&kp TILDE  &kp SQT      &kp DQT    &kp MINUS   &kp EQUAL    &trans   &kp UNDER  &kp PLUS   &kp LBKT       &kp RBKT  &kp LBRC   &kp RBRC
+&kp BSLH   &kp PIPE     &kp COLON  &kp SEMI    &kp SLASH    &trans   &kp GRAVE  &kp LT     &kp GT         &kp QMARK &trans     &trans
+&trans     &trans       &trans     &trans      &trans       &trans   &trans     &trans                                         &trans
             >;
         };
 
-        LAYER_3 {
+        Nav {
             bindings = <
-&kp ESC   &kp LC(LS(TAB))  &kp UP    &kp LC(TAB)  &trans                       &trans  &trans  &trans  &trans  &trans
-&kp HOME  &kp LEFT         &kp DOWN  &kp RIGHT    &kp END  &trans      &trans  &trans  &trans  &trans  &trans  &trans
-&trans    &trans           &trans    &trans       &trans   &trans      &trans  &trans  &trans  &trans  &trans  &trans
-&trans    &trans           &trans    &trans       &trans   &trans      &trans  &trans                          &trans
+&kp LG(GRAVE)  &kp LG(W)  &kp LC(UP)  &kp LC(LEFT)  &kp LC(RIGHT)                          &kp PG_UP     &kp LC(LS(TAB))  &kp UP          &kp LC(TAB)     &kp PG_DN
+&kp LCTRL   &kp LALT   &kp LGUI   &kp LSHIFT  &kp LC(DOWN)    &trans     &kp LG(SPACE)  &kp LG(LEFT)  &kp LEFT         &kp DOWN        &kp RIGHT       &kp LG(RIGHT)
+&kp LG(Z)   &kp LG(X)  &kp LG(C)  &kp LG(V)   &kp LG(LS(Z))   &trans     &kp LG(LS(N5))  &kp LA(LEFT)  &kp LA(RIGHT)    &kp LG(LC(LS(N4)))  &kp LG(LS(N4))  &kp LA(BSPC)
+&trans      &trans     &trans     &trans      &trans          &trans     &trans  &trans                                                           &trans
             >;
         };
 
-        LAYER_4 {
+        NavWin {
+            bindings = <
+&kp LA(TAB)  &kp LC(W)  &kp LG(TAB)  &kp LC(LG(LEFT))  &kp LC(LG(RIGHT))                    &trans        &trans         &trans          &trans  &trans
+&trans     &trans     &kp LALT   &trans     &kp LG(D)  &trans    &kp LGUI  &kp HOME      &trans         &trans          &trans  &kp END
+&kp LC(Z)  &kp LC(X)  &kp LC(C)  &kp LC(V)  &kp LC(Y)  &trans    &trans  &kp LC(LEFT)  &kp LC(RIGHT)  &kp LG(LS(S))   &kp PSCRN  &kp LC(BSPC)
+&trans     &trans     &trans     &trans     &trans     &trans    &trans  &trans                                               &trans
+            >;
+        };
+
+        WinMode {
             bindings = <
 &trans  &trans  &trans  &trans  &trans                      &trans  &trans  &trans  &trans  &trans
 &trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans  &trans  &trans  &trans  &trans
@@ -52,7 +90,17 @@
             >;
         };
 
-        LAYER_5 {
+        System {
+            bindings = <
+&bt BT_CLR  &kp LC(LG(Q))  &trans  &trans  &bootloader                           &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4
+&tog 5      &trans  &trans  &trans  &trans       &trans      &trans       &trans        &trans        &trans        &trans        &trans
+&trans      &trans  &trans  &trans  &trans       &trans      &bootloader  &trans        &trans        &trans        &trans        &trans
+&trans      &trans  &trans  &trans  &trans       &trans      &trans       &trans                                                  &trans
+            >;
+        };
+
+        // トラックボールを動かすと出る自動マウスレイヤー（KeyballBLE_R.overlay の automouse-layer）。今は中身なし
+        Mouse {
             bindings = <
 &trans  &trans  &trans  &trans  &trans                      &trans  &trans  &trans  &trans  &trans
 &trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans  &trans  &trans  &trans  &trans
@@ -61,12 +109,13 @@
             >;
         };
 
-        LAYER_6 {
+        // I 長押しで有効 → トラックボールがスクロールになる（KeyballBLE_R.overlay の scroll-layers）
+        Scroll {
             bindings = <
-&trans  &trans  &bt BT_CLR_ALL  &trans  &trans                           &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4
-&trans  &trans  &trans          &trans  &trans  &trans      &trans       &trans        &trans        &trans        &trans        &trans
-&trans  &kp N1  &kp N2          &kp N3  &kp N4  &trans      &bootloader  &trans        &trans        &trans        &trans        &bt BT_CLR
-&trans  &trans  &trans          &trans  &trans  &trans      &trans       &trans                                                  &bt BT_CLR_ALL
+&trans  &trans  &trans  &trans  &trans                      &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans                          &trans
             >;
         };
     };
