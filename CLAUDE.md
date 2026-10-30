@@ -4,7 +4,14 @@
 開発者ではないので、説明は平易な日本語で、変更前に「何がどう変わるか」を一言で伝えてから作業すること。
 
 ## 構成
-- キーマップ: `config/KeyballBLE.keymap`（Keymap Editor でも編集される。編集後は Editor で開けることを壊さない）
+- キーマップ: `config/KeyballBLE.keymap`。編集は Claude Code で行う
+- Keymap Editor は GitHub 連携の終了が告知された（2026-10、年末ごろサーバー停止見込み）。
+  保存すると conditional layers・マクロ・コメントが崩れる恐れがあるため、閲覧のみ・保存しない
+- 配列図: `.github/workflows/draw.yml`（keymap-drawer 0.23.0）が、keymap を Push するたびに
+  `keymap-drawer/KeyballBLE.svg` を描き直して自動 Commit する。README に表示される。
+  新しいキーや略語を追加したら `keymap_drawer.config.yaml` に日本語の表示名も追加する（長いものは \n で2行に）。
+  レイヤーを増減・改名したら `draw.yml` の --layer-names（定義順・全レイヤー分）と -s も合わせる。
+  見た目はライト表示固定・白背景（本人がダーク表示を見にくいと判断）
 - GitHub: Number867/KeyballBLE（Amasyake1917/KeyballBLE の fork）。gh は ~/.local/bin/gh、`gh repo set-default Number867/KeyballBLE` 済み
   （upstream リモートがあるので、-R を付けないと fork 元を見てしまうことがある）
 - ビルド: `build.yaml` と GitHub Actions（workflow は build-user-config@v0.3）。ZMK は `config/west.yml` でコミット 9a8fdd6 に固定
@@ -15,19 +22,20 @@
 
 ## 物理配列（各レイヤー 43 箇所、bindings の並び順）
 - 1段目: 左5 | 右5（Q W E R T | Y U I O P）
-- 2段目: 左5 + 左内側（エンコーダー押し=左クリック） | 右内側 + 右5（A S D F G [LCLK] | [?] H J K L -）
-- 3段目: 左5 + 左内側（右クリックボタン） | 右内側 + 右5（Z X C V B [RCLK] | [@] N M , . BSPC）
+- 2段目: 左5 + 左内側（エンコーダー押し=左クリック） | 右内側 + 右5（A S D F G [LCLK] | ['] H J K L -）
+- 3段目: 左5 + 左内側（右クリックボタン） | 右内側 + 右5（Z X C V B [RCLK] | [@] N M , . BSPC）※右内側下は 2026-10 に / から @ に変更
 - 4段目: 左の修飾キー列4（GUI CTRL TAB SHIFT）+ 左親指2 | 右親指2 + 右端1（DEL）
 - 左内側の LCLK / RCLK は変更しない。トラックボールはキーマップ外
 
 ## 現在のレイヤー方針（2026-10 改訂）
-- 0 Base: QWERTY。右内側は ' と /（? は Shift+/、@ は記号レイヤー）。I 長押し = スクロール（レイヤー 8、旧配列から引き継ぎ）
+- 0 Base: QWERTY。右内側は ' と @（Slack のメンション・メール用。/ は記号・数字レイヤー、? は記号レイヤー）。I 長押し = スクロール（レイヤー 8、旧配列から引き継ぎ）
 - 1 Num（左親指 Space 長押し）: 左 F1–F12、右テンキー + 記号 / * - + = , .
   左 B 位置 = 今日の日付（マクロ &date_paste: ⌃⌥⌘F18 → 600ms 待つ → ⌘V）。
   Mac 標準の「ショートカット」アプリが ⌃⌥⌘F18 で日付を 20261029 形式でコピーする（両方の Mac に設定が必要）。
   キーボードは日付を知らないので PC 側の設定が必須。前のコピー内容が貼られる時は待ち時間を増やす。
   追加アプリ（Hammerspoon 等）は本人の希望で使わない。Windows は未設定
 - 2 Char（右親指 Enter 長押し）: 記号。上段は US 配列の Shift+数字 と同じ並び
+  左ホーム段 = ! ? " - =（日本語の！？用に左手ホームへ）、右下 . の位置 = ~
 - 3 Nav（左親指内側 長押し）: 矢印は右手 I=↑ J K L=← ↓ →（指の位置を変えないこと）。
   左手: ホーム段 A S D F = Ctrl Opt Cmd Shift（押しっぱなしで矢印と組み合わせて選択）、
   下段 Z X C V B = 取消 切取 コピー 貼付 やり直し（Mac の Cmd）。
@@ -59,6 +67,7 @@
 - 慣れる期間があっても効率重視で変えてよい
 
 ## 今後の検討（未着手）
+- ZMK Studio（キーボードをつないだままブラウザで配列変更）: ZMK の版や設定の変更が必要で、ビルドが壊れるリスクがあるため保留
 - 自動マウスレイヤー: 仕組みはすでに有効（レイヤー 7 Mouse、動かしてから 700ms）。中身が空なので今は何も変わらない。
   クリック/スクロールキーを置くかは本人と相談してから
 - 定型文マクロ（メールアドレス・署名など）、プレーンテキスト貼り付け(⌥⇧⌘V)の追加
