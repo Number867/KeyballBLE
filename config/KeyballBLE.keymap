@@ -44,7 +44,7 @@
             bindings = <
 &kp Q     &kp W      &kp E    &kp R       &kp T                                  &kp Y        &kp U  &lt 8 I    &kp O    &kp P
 &kp A     &kp S      &kp D    &kp F       &kp G        &mkp LCLK      &kp SQT    &kp H        &kp J  &kp K      &kp L    &kp MINUS
-&kp Z     &kp X      &kp C    &kp V       &kp B        &mkp RCLK      &kp SLASH  &kp N        &kp M  &kp COMMA  &kp DOT  &kp BACKSPACE
+&kp Z     &kp X      &kp C    &kp V       &kp B        &mkp RCLK      &kp AT_SIGN &kp N        &kp M  &kp COMMA  &kp DOT  &kp BACKSPACE
 &sk LGUI  &sk LCTRL  &kp TAB  &sk LSHIFT  &lt 1 SPACE  &mo 3          &kp ESC    &lt 2 ENTER                             &kp DEL
             >;
         };
@@ -61,8 +61,8 @@
         Char {
             bindings = <
 &kp EXCL   &kp AT_SIGN  &kp HASH   &kp DOLLAR  &kp PERCENT                         &kp CARET  &kp AMPERSAND  &kp STAR   &kp LPAR  &kp RPAR
-&kp TILDE  &kp SQT      &kp DQT    &kp MINUS   &kp EQUAL    &trans      &kp UNDER  &kp PLUS   &kp LBKT       &kp RBKT   &kp LBRC  &kp RBRC
-&kp BSLH   &kp PIPE     &kp COLON  &kp SEMI    &kp SLASH    &trans      &kp GRAVE  &kp LT     &kp GT         &kp QMARK  &trans    &trans
+&kp EXCL   &kp QMARK    &kp DQT    &kp MINUS   &kp EQUAL    &trans      &kp UNDER  &kp PLUS   &kp LBKT       &kp RBKT   &kp LBRC  &kp RBRC
+&kp BSLH   &kp PIPE     &kp COLON  &kp SEMI    &kp SLASH    &trans      &kp GRAVE  &kp LT     &kp GT         &kp QMARK  &kp TILDE    &trans
 &trans     &trans       &trans     &trans      &trans       &trans      &trans     &trans                                         &trans
             >;
         };
