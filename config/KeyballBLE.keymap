@@ -23,12 +23,15 @@
     };
 
     behaviors {
-        // 左手のホイール（エンコーダー）: 回すとマウスのスクロール。向きが逆なら SCRL_DOWN と SCRL_UP を入れ替える
+        // 左手のホイール（エンコーダー）: 1クリックで1段スクロール。
+        // &msc は「押している間、速度×16ms ごとに少しずつ動く」仕組みなので、標準の SCRL_DOWN（速度10）を短く押すだけでは
+        // 端数が切り捨てられて 0 になる。速度70・30ms 押下で、16ms 後の1回の計算で 70×0.016=1.12 → 1段送られる。
+        // 向きが逆なら -70 と 70 を入れ替える。1クリックで2段にしたい時は 140 にする
         wheel_scroll: wheel_scroll {
             compatible = "zmk,behavior-sensor-rotate";
             #sensor-binding-cells = <0>;
-            bindings = <&msc SCRL_DOWN>, <&msc SCRL_UP>;
-            tap-ms = <10>;
+            bindings = <&msc MOVE_Y(-70)>, <&msc MOVE_Y(70)>;
+            tap-ms = <30>;
         };
     };
 
