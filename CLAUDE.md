@@ -72,3 +72,20 @@
   クリック/スクロールキーを置くかは本人と相談してから
 - 定型文マクロ（メールアドレス・署名など）、プレーンテキスト貼り付け(⌥⇧⌘V)の追加
 - IME は Ctrl+Space のトグルで確定（打ちながら切り替える使い方のため専用キーは不要と本人判断）
+
+## ホイール（左手のエンコーダー）
+- 基本レイヤーの `sensor-bindings = <&wheel_scroll>` で全レイヤー共通のスクロール（上位レイヤーに sensor-bindings が無ければ下へ落ちる）
+- `&wheel_scroll` は sensor-rotate + `&msc MOVE_Y(±70)`, tap-ms 30。&msc は「速度×16ms ごと」に動く仕組みなので、
+  標準の SCRL_DOWN（速度10）や短い tap-ms では端数切り捨てで 0 になる（2026-10 にこれで動かなかった）。量を変える時は 70 の倍数で
+- `KeyballBLE.dtsi` の sensors: steps 12 / triggers-per-rotation 12（揃えないと刻みごとに空振りが出る）
+- 3月版以降のキーマップに sensor-bindings が無く、新ファームを書くとホイールが無反応になっていた経緯あり。消さないこと
+
+## 省電力
+- 左右の .conf で CONFIG_ZMK_SLEEP=y（30分無操作で深い眠り）。kscan の `wakeup-source;` を消すと、キーで起きなくなりリセットボタンが必要になる
+
+## 書き込み（本人向け手順）
+- Actions の「Build ZMK firmware」の Artifacts → firmware.zip → KeyballBLE_R / KeyballBLE_L の .uf2。settings_reset は使わない（BT ペアリングが全消去）
+- 本人の CIO マグネットケーブルは、つないだまま書き込みモードに入ると USB メモリとして認識されない。
+  **先にケーブルを外して書き込みモード（リセット2回押し、または Space+Enter 同時長押し → 右は @ の位置 / 左は T）→ ランプが明滅したらケーブルをつなぐ**
+- キー割り当ては右手側（中心役）が処理するので、キーマップだけの変更なら右手側の書き込みで足りることが多い。.conf / .dtsi を変えた時は左右とも
+
