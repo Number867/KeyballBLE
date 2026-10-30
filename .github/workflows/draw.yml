@@ -1,0 +1,44 @@
+# キーマップを変更して Push するたびに、配列図（keymap-drawer/KeyballBLE.svg）を描き直して Commit する
+name: Draw keymap
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "config/*.keymap"
+      - "config/*.json"
+      - "keymap_drawer.config.yaml"
+      - ".github/workflows/draw.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  draw:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: keymap-drawer をインストール
+        run: pipx install "keymap-drawer==0.23.0"
+
+      - name: 配列図を描く
+        run: |
+          mkdir -p keymap-drawer
+          # レイヤー名（keymap の定義順。レイヤーを増減したらここも合わせる）
+          keymap -c keymap_drawer.config.yaml parse -z config/KeyballBLE.keymap \
+            --layer-names "0 基本" "1 数字（左Space長押し）" "2 記号（右Enter長押し）" \
+              "3 編集（左親指内側長押し）" "4 編集・Windows版（Winモード時のみ）" "5 Winモード" \
+              "6 設定（Space＋Enter同時長押し）" "7 マウス" "8 スクロール（I長押し）" "9 予備" \
+            > keymap-drawer/KeyballBLE.yaml
+          keymap -c keymap_drawer.config.yaml draw -j config/KeyballBLE.json keymap-drawer/KeyballBLE.yaml \
+            -s "0 基本" "1 数字（左Space長押し）" "2 記号（右Enter長押し）" \
+              "3 編集（左親指内側長押し）" "4 編集・Windows版（Winモード時のみ）" "6 設定（Space＋Enter同時長押し）" \
+            > keymap-drawer/KeyballBLE.svg
+
+      - name: 変更があれば Commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add keymap-drawer
+          git diff --cached --quiet || (git commit -m "配列図を更新 [keymap-drawer]" && git push)
