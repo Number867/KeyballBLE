@@ -78,13 +78,15 @@
 - 本人はチルトスタンド使用のため、左のドラム押し込み（左クリック）だとスタンドが崩れる → 右手でクリックするのが目的
 
 ## ホイール（左手のエンコーダー）
-- 基本レイヤーの `sensor-bindings = <&wheel_scroll>` で全レイヤー共通のスクロール（上位レイヤーに sensor-bindings が無ければ下へ落ちる）
-- `&wheel_scroll` = sensor-rotate + `&msc MOVE_Y(±210)`、tap-ms 30。段数 = 速度×0.016 の切り捨て（70=1段、210=3段）。
-  標準の SCRL_DOWN（速度10）や短い tap-ms では 0 段になる（2026-10 に無反応だった原因）
-- `KeyballBLE.dtsi` の sensors: steps 12 / triggers-per-rotation 6（A/B 信号の変化2回で1反応）。
-  ZMK の ec11 は変化1回ごとに数える。tpr=12（変化1回ごと）は接点のバタつきが逆スクロールになり上下にブレた。tpr=3 は遅すぎた
-- 本人の要望: Mac の一般的なマウスと同じくらいの速さ。速すぎ/遅すぎは速度（210）で調整し、tpr は 6 のまま
-- 3月版以降のキーマップに sensor-bindings が無く、新ファームを書くとホイールが無反応になっていた経緯あり。消さないこと
+- **購入元 Dist16384/KeyballBLE（2025-03-26 版）と同じ設定**にしてある。本人はこの感触（工場出荷時）が一番なめらかと判断
+  - keymap 先頭: `#define ZMK_POINTING_DEFAULT_SCRL_VAL 120`（include より前）
+  - `ROTATE`（zmk,behavior-sensor-rotate-var, &msc, tap-ms 20）、基本レイヤー `sensor-bindings = <&ROTATE SCRL_DOWN SCRL_UP>`
+  - `KeyballBLE.dtsi`: steps 12 / triggers-per-rotation 10
+- 経緯（2026-10）: 本リポジトリは購入元の 2025-03-25 版から分岐しており、ホイール設定の完成版（03-26）を取り込めていなかった。
+  さらに 2026-03-30 の編集で sensor-bindings が消え、新ファームでホイールが無反応に。独自調整
+  （速度70/210・tpr 3/6/12 など）は、ブレる・遅い・ぎこちないで不評だったため購入元の値に戻した
+- 調整する時は SCRL_VAL だけを変え、tpr・tap-ms は購入元の値から変えない
+- 上位レイヤーに sensor-bindings が無ければ基本レイヤーの設定が使われる。消さないこと
 
 ## 省電力
 - 左右の .conf で CONFIG_ZMK_SLEEP=y（30分無操作で深い眠り）。kscan の `wakeup-source;` を消すと、キーで起きなくなりリセットボタンが必要になる
