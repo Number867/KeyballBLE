@@ -110,6 +110,8 @@
     sensors: sensors {
         compatible = "zmk,keymap-sensors";
         sensors = <&left_encoder &right_encoder>;
-        triggers-per-rotation = <12>;  // steps(12) と揃えて、ホイール1刻み=1回。10 だと6刻みに1回空振りする
+        // ホイール1刻み=A/B信号の変化4回(steps÷4)ごとに1回スクロール。12 だと変化1回ごとに反応し、
+        // 接点のバタつきが逆方向スクロールとして出る（2026-10 に上下にブレた原因）。2刻みで1回になる時は 6 に
+        triggers-per-rotation = <3>;
     };
 };
