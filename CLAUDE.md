@@ -79,10 +79,11 @@
 
 ## ホイール（左手のエンコーダー）
 - 基本レイヤーの `sensor-bindings = <&wheel_scroll>` で全レイヤー共通のスクロール（上位レイヤーに sensor-bindings が無ければ下へ落ちる）
-- `&wheel_scroll` は sensor-rotate + `&msc MOVE_Y(±70)`, tap-ms 30。&msc は「速度×16ms ごと」に動く仕組みなので、
-  標準の SCRL_DOWN（速度10）や短い tap-ms では端数切り捨てで 0 になる（2026-10 にこれで動かなかった）。量を変える時は 70 の倍数で
-- `KeyballBLE.dtsi` の sensors: steps 12 / triggers-per-rotation 3（= A/B 信号の変化4回で1スクロール。ZMK の ec11 は変化1回ごとに数えるため、
-  steps と同じにすると接点のバタつきが逆スクロールになり上下にブレる。2刻みで1回しか動かなければ 6）
+- `&wheel_scroll` = sensor-rotate + `&msc MOVE_Y(±210)`、tap-ms 30。段数 = 速度×0.016 の切り捨て（70=1段、210=3段）。
+  標準の SCRL_DOWN（速度10）や短い tap-ms では 0 段になる（2026-10 に無反応だった原因）
+- `KeyballBLE.dtsi` の sensors: steps 12 / triggers-per-rotation 6（A/B 信号の変化2回で1反応）。
+  ZMK の ec11 は変化1回ごとに数える。tpr=12（変化1回ごと）は接点のバタつきが逆スクロールになり上下にブレた。tpr=3 は遅すぎた
+- 本人の要望: Mac の一般的なマウスと同じくらいの速さ。速すぎ/遅すぎは速度（210）で調整し、tpr は 6 のまま
 - 3月版以降のキーマップに sensor-bindings が無く、新ファームを書くとホイールが無反応になっていた経緯あり。消さないこと
 
 ## 省電力
