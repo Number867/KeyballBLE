@@ -110,8 +110,7 @@
     sensors: sensors {
         compatible = "zmk,keymap-sensors";
         sensors = <&left_encoder &right_encoder>;
-        // A/B信号の変化2回(steps÷6)ごとに1回反応。12（変化1回ごと）だと接点のバタつきが逆スクロールになり上下にブレる。
-        // 3（変化4回ごと）では遅すぎた（2026-10）。1回あたりの量は keymap の &wheel_scroll の速度で調整
-        triggers-per-rotation = <6>;
+        // 購入元(Dist16384/KeyballBLE)の設定と同じ値。ホイールの動きを工場出荷時の感触に戻すため（2026-10）
+        triggers-per-rotation = <10>;
     };
 };
