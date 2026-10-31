@@ -1,3 +1,6 @@
+// ホイールのスクロール量。購入元(Dist16384/KeyballBLE)の設定と同じ値（ZMK 標準は 10）。include より前に書く必要がある
+#define ZMK_POINTING_DEFAULT_SCRL_VAL 120
+
 #include <behaviors.dtsi>
 #include <dt-bindings/zmk/bt.h>
 #include <dt-bindings/zmk/keys.h>
@@ -23,15 +26,13 @@
     };
 
     behaviors {
-        // 左手のホイール（エンコーダー）: 1回の反応で3段スクロール（Mac の一般的なマウスに近い量）。
-        // &msc は「押している間、速度×16ms ごとに動く」仕組み。30ms 押下だと16ms後の1回だけ計算されるので、
-        // 段数 = 速度×0.016 の切り捨て。70→1段、140→2段、210→3段、280→4段。標準の SCRL_DOWN（速度10）では 0 段になる。
-        // 向きが逆なら符号を入れ替える
-        wheel_scroll: wheel_scroll {
-            compatible = "zmk,behavior-sensor-rotate";
-            #sensor-binding-cells = <0>;
-            bindings = <&msc MOVE_Y(-210)>, <&msc MOVE_Y(210)>;
-            tap-ms = <30>;
+        // 左手のホイール（エンコーダー）: 購入元(Dist16384/KeyballBLE, 2025-03-26)と同じ設定に戻した（2026-10）。
+        // 速さを変える時は、ファイル先頭の ZMK_POINTING_DEFAULT_SCRL_VAL を変える
+        ROTATE: ROTATE {
+            compatible = "zmk,behavior-sensor-rotate-var";
+            #sensor-binding-cells = <2>;
+            bindings = <&msc>, <&msc>;
+            tap-ms = <20>;
         };
     };
 
@@ -62,7 +63,7 @@
             >;
 
             // ホイールは全レイヤー共通でスクロール（他のレイヤーに sensor-bindings が無ければここが使われる）
-            sensor-bindings = <&wheel_scroll>;
+            sensor-bindings = <&ROTATE SCRL_DOWN SCRL_UP>;
         };
 
         Num {
