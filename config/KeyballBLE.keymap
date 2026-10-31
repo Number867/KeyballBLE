@@ -119,14 +119,15 @@
             >;
         };
 
-        // トラックボールを動かすと出る自動マウスレイヤー（KeyballBLE_R.overlay の automouse-layer）。今は中身なし
+        // トラックボールを動かすと出る自動マウスレイヤー（KeyballBLE_R.overlay の automouse-layer、止めて0.7秒で戻る）
 
         Mouse {
+            // 右手: H=戻る(⌘[)  J=左クリック  K=右クリック  L=押している間スクロール  小指=進む(⌘])
             bindings = <
-&trans  &trans  &trans  &trans  &trans                      &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans                          &trans
+&trans  &trans  &trans  &trans  &trans                      &trans         &trans     &trans     &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans      &trans  &kp LG(LBKT)   &mkp LCLK  &mkp RCLK  &mo 8   &kp LG(RBKT)
+&trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans         &trans     &trans     &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans                                       &trans
             >;
         };
 
