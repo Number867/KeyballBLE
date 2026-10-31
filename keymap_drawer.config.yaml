@@ -62,6 +62,8 @@ parse_config:
     LC(DOWN): "窓\n一覧"
     LC(LEFT): "←\n画面"
     LC(RIGHT): "画面\n→"
+    LG(LBKT): "戻る"
+    LG(RBKT): "進む"
     LG(SPACE): "Spot-\nlight"
     LG(LEFT): "行頭"
     LG(RIGHT): "行末"
@@ -103,7 +105,7 @@ parse_config:
     "3 編集（左親指内側長押し）": "編集"
     "4 編集・Windows版（Winモード時のみ）": "編集Win"
     "6 設定（Space＋Enter同時長押し）": "設定"
-    "7 マウス": "マウス"
+    "7 自動マウス（トラックボール操作中）": "マウス"
     "8 スクロール（I長押し）": "スクロール"
 draw_config:
   key_w: 64
